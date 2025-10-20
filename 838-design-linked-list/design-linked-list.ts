@@ -1,82 +1,79 @@
-
-
 class MyLinkedList {
-    private head: ListNode | null;
-    private size: number;
+  private head: ListNode | null;
+  private tail: ListNode | null;
+  private size: number;
+
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+  }
+
+  get(index: number): number {
+    if (index < 0 || index >= this.size) return -1;
     
-    constructor() {
-        this.head = null;
-        this.size = 0;
+    let current = this.head;
+    for (let i = 0; i < index; i++) {
+      current = current!.next;
     }
-    
-    get(index: number): number {
-        if (index < 0 || index >= this.size) return -1;
-        
-        let curr = this.head;
-        for (let i = 0; i < index; i++) {
-            curr = curr!.next;
-        }
-        return curr!.val;
+    return current!.val;
+  }
+
+  addAtHead(val: number): void {
+    const newNode = new ListNode(val, this.head);
+    this.head = newNode;
+    if (this.size === 0) this.tail = newNode;
+    this.size++;
+  }
+
+  addAtTail(val: number): void {
+    const newNode = new ListNode(val);
+    if (this.size === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.tail!.next = newNode;
+      this.tail = newNode;
     }
-    
-    addAtHead(val: number): void {
-        const node = new ListNode(val);
-        node.next = this.head;
-        this.head = node;
-        this.size++;
+    this.size++;
+  }
+
+  addAtIndex(index: number, val: number): void {
+    if (index > this.size) return;
+    if (index <= 0) {
+      this.addAtHead(val);
+      return;
     }
-    
-    addAtTail(val: number): void {
-        if (this.size === 0) {
-            this.addAtHead(val);
-            return;
-        }
-        
-        let curr = this.head;
-        while (curr!.next) {
-            curr = curr!.next;
-        }
-        curr!.next = new ListNode(val);
-        this.size++;
+    if (index === this.size) {
+      this.addAtTail(val);
+      return;
     }
-    
-    addAtIndex(index: number, val: number): void {
-        if (index > this.size) return;
-        if (index <= 0) {
-            this.addAtHead(val);
-            return;
-        }
-        if (index === this.size) {
-            this.addAtTail(val);
-            return;
-        }
-        
-        let curr = this.head;
-        for (let i = 0; i < index - 1; i++) {
-            curr = curr!.next;
-        }
-        
-        const node = new ListNode(val);
-        node.next = curr!.next;
-        curr!.next = node;
-        this.size++;
+
+    let current = this.head;
+    for (let i = 0; i < index - 1; i++) {
+      current = current!.next;
     }
-    
-    deleteAtIndex(index: number): void {
-        if (index < 0 || index >= this.size) return;
-        
-        if (index === 0) {
-            this.head = this.head!.next;
-            this.size--;
-            return;
-        }
-        
-        let curr = this.head;
-        for (let i = 0; i < index - 1; i++) {
-            curr = curr!.next;
-        }
-        
-        curr!.next = curr!.next!.next;
-        this.size--;
+    const newNode = new ListNode(val, current!.next);
+    current!.next = newNode;
+    this.size++;
+  }
+
+  deleteAtIndex(index: number): void {
+    if (index < 0 || index >= this.size) return;
+
+    if (index === 0) {
+      this.head = this.head!.next;
+      if (this.size === 1) this.tail = null;
+      this.size--;
+      return;
     }
+
+    let current = this.head;
+    for (let i = 0; i < index - 1; i++) {
+      current = current!.next;
+    }
+    current!.next = current!.next!.next;
+    if (index === this.size - 1) this.tail = current;
+    this.size--;
+  }
 }
