@@ -1,10 +1,14 @@
-const splitArray = (nums, k) => {
-    const canSplit = (maxSum) => {
+function splitArray(nums: number[], k: number): number {
+    let left = Math.max(...nums);
+    let right = nums.reduce((a, b) => a + b, 0);
+    
+    while (left < right) {
+        const mid = Math.floor((left + right) / 2);
         let splits = 1;
         let currentSum = 0;
         
         for (const num of nums) {
-            if (currentSum + num > maxSum) {
+            if (currentSum + num > mid) {
                 splits++;
                 currentSum = num;
             } else {
@@ -12,16 +16,7 @@ const splitArray = (nums, k) => {
             }
         }
         
-        return splits <= k;
-    };
-    
-    let left = Math.max(...nums);
-    let right = nums.reduce((sum, num) => sum + num, 0);
-    
-    while (left < right) {
-        const mid = Math.floor((left + right) / 2);
-        
-        if (canSplit(mid)) {
+        if (splits <= k) {
             right = mid;
         } else {
             left = mid + 1;
@@ -29,4 +24,4 @@ const splitArray = (nums, k) => {
     }
     
     return left;
-};
+}
