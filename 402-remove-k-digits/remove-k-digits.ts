@@ -1,9 +1,9 @@
-var removeKdigits = function(num, k) {
-    const stack = [];
+function removeKdigits(num: string, k: number): string {
+    const stack: string[] = [];
     let toRemove = k;
     
     for (const digit of num) {
-        while (stack.length && stack[stack.length - 1] > digit && toRemove > 0) {
+        while (stack.length > 0 && stack[stack.length - 1] > digit && toRemove > 0) {
             stack.pop();
             toRemove--;
         }
@@ -15,6 +15,12 @@ var removeKdigits = function(num, k) {
         toRemove--;
     }
     
-    let result = stack.join('').replace(/^0+/, '');
-    return result || '0';
-};
+    let result = stack.join('');
+    let i = 0;
+    while (i < result.length && result[i] === '0') {
+        i++;
+    }
+    result = result.slice(i);
+    
+    return result === '' ? '0' : result;
+}
