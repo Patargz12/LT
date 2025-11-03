@@ -1,10 +1,16 @@
-function validWordSquare(words: string[]): boolean {
-  for (let i = 0; i < words.length; i++) {
-    for (let j = 0; j < words[i].length; j++) {
-      if (j >= words.length || i >= words[j].length || words[i][j] !== words[j][i]) {
-        return false;
-      }
+function validWordSquare(words) {
+    const n = words.length;
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < words[i].length; j++) {
+            if (j >= n || i >= words[j].length) {
+                return false;
+            }
+            if (words[i][j] !== words[j][i]) {
+                return false;
+            }
+        }
     }
-  }
-  return true;
+    
+    return true;
 }
