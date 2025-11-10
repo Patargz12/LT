@@ -14,12 +14,13 @@ function alienOrder(words: string[]): string {
     for (let i = 0; i < words.length - 1; i++) {
         const word1 = words[i];
         const word2 = words[i + 1];
+        const minLen = Math.min(word1.length, word2.length);
         
         if (word1.length > word2.length && word1.startsWith(word2)) {
             return "";
         }
         
-        for (let j = 0; j < Math.min(word1.length, word2.length); j++) {
+        for (let j = 0; j < minLen; j++) {
             if (word1[j] !== word2[j]) {
                 if (!graph.get(word1[j])!.has(word2[j])) {
                     graph.get(word1[j])!.add(word2[j]);
@@ -37,11 +38,11 @@ function alienOrder(words: string[]): string {
         }
     }
     
-    const result: string[] = [];
+    let result = "";
     
     while (queue.length > 0) {
         const char = queue.shift()!;
-        result.push(char);
+        result += char;
         
         for (const neighbor of graph.get(char)!) {
             inDegree.set(neighbor, inDegree.get(neighbor)! - 1);
@@ -51,5 +52,5 @@ function alienOrder(words: string[]): string {
         }
     }
     
-    return result.length === inDegree.size ? result.join("") : "";
+    return result.length === inDegree.size ? result : "";
 }
