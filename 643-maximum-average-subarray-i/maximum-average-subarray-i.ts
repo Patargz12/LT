@@ -8,7 +8,7 @@ function findMaxAverage(nums: number[], k: number): number {
     let maxSum = sum;
     
     for (let i = k; i < nums.length; i++) {
-        sum = sum - nums[i - k] + nums[i];
+        sum += nums[i] - nums[i - k];
         maxSum = Math.max(maxSum, sum);
     }
     
