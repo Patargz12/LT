@@ -1,19 +1,19 @@
 function predictPartyVictory(senate: string): string {
-    const n = senate.length
-    const radiant: number[] = []
-    const dire: number[] = []
+  const R: number[] = []
+  const D: number[] = []
+  const n = senate.length
 
-    for (let i = 0; i < n; i++) {
-        if (senate[i] === 'R') radiant.push(i)
-        else dire.push(i)
-    }
+  for (let i = 0; i < n; i++) {
+    if (senate[i] === "R") R.push(i)
+    else D.push(i)
+  }
 
-    while (radiant.length && dire.length) {
-        const r = radiant.shift()!
-        const d = dire.shift()!
-        if (r < d) radiant.push(r + n)
-        else dire.push(d + n)
-    }
+  while (R.length && D.length) {
+    const r = R.shift()!
+    const d = D.shift()!
+    if (r < d) R.push(r + n)
+    else D.push(d + n)
+  }
 
-    return radiant.length ? "Radiant" : "Dire"
+  return R.length ? "Radiant" : "Dire"
 }
