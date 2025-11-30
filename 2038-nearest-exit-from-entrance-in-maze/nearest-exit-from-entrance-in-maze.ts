@@ -1,30 +1,29 @@
-function nearestExit(maze, entrance) {
+function nearestExit(maze: string[][], entrance: number[]): number {
     const m = maze.length;
     const n = maze[0].length;
-    const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    const [startRow, startCol] = entrance;
     
-    const queue = [[entrance[0], entrance[1], 0]];
-    const visited = new Set();
-    visited.add(`${entrance[0]},${entrance[1]}`);
+    const queue: [number, number, number][] = [[startRow, startCol, 0]];
+    maze[startRow][startCol] = '+';
+    
+    const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
     
     while (queue.length > 0) {
-        const [row, col, steps] = queue.shift();
+        const [row, col, steps] = queue.shift()!;
         
-        for (const [dr, dc] of directions) {
+        for (const [dr, dc] of dirs) {
             const newRow = row + dr;
             const newCol = col + dc;
-            const key = `${newRow},${newCol}`;
             
-            if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && 
-                maze[newRow][newCol] === '.' && !visited.has(key)) {
-                
-                if ((newRow === 0 || newRow === m - 1 || newCol === 0 || newCol === n - 1)) {
-                    return steps + 1;
-                }
-                
-                visited.add(key);
-                queue.push([newRow, newCol, steps + 1]);
+            if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n) continue;
+            if (maze[newRow][newCol] === '+') continue;
+            
+            if (newRow === 0 || newRow === m - 1 || newCol === 0 || newCol === n - 1) {
+                return steps + 1;
             }
+            
+            maze[newRow][newCol] = '+';
+            queue.push([newRow, newCol, steps + 1]);
         }
     }
     
