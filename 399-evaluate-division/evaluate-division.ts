@@ -1,32 +1,36 @@
-var calcEquation = function(equations, values, queries) {
-    const graph = {};
+function calcEquation(
+    equations: string[][], 
+    values: number[], 
+    queries: string[][]
+): number[] {
+    const graph = new Map<string, Map<string, number>>();
     
     for (let i = 0; i < equations.length; i++) {
         const [a, b] = equations[i];
-        const val = values[i];
+        const value = values[i];
         
-        if (!graph[a]) graph[a] = [];
-        if (!graph[b]) graph[b] = [];
+        if (!graph.has(a)) graph.set(a, new Map());
+        if (!graph.has(b)) graph.set(b, new Map());
         
-        graph[a].push([b, val]);
-        graph[b].push([a, 1 / val]);
+        graph.get(a)!.set(b, value);
+        graph.get(b)!.set(a, 1 / value);
     }
     
-    const dfs = (start, end, visited) => {
-        if (!(start in graph) || !(end in graph)) return -1;
+    const dfs = (start: string, end: string, visited: Set<string>): number => {
+        if (!graph.has(start) || !graph.has(end)) return -1;
         if (start === end) return 1;
         
         visited.add(start);
         
-        for (const [next, val] of graph[start]) {
-            if (!visited.has(next)) {
-                const res = dfs(next, end, visited);
-                if (res !== -1) return val * res;
-            }
+        for (const [neighbor, value] of graph.get(start)!) {
+            if (visited.has(neighbor)) continue;
+            
+            const result = dfs(neighbor, end, visited);
+            if (result !== -1) return value * result;
         }
         
         return -1;
     };
     
     return queries.map(([c, d]) => dfs(c, d, new Set()));
-};
+}
