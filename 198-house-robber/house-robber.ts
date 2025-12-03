@@ -1,4 +1,6 @@
-const rob = (nums) => {
+function rob(nums: number[]): number {
+    if (nums.length === 1) return nums[0];
+    
     let prev2 = 0;
     let prev1 = 0;
     
@@ -9,4 +11,4 @@ const rob = (nums) => {
     }
     
     return prev1;
-};
+}
