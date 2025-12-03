@@ -1,13 +1,13 @@
-const maxProfit = (prices: number[], fee: number): number => {
-    if (prices.length <= 1) return 0;
-    
-    let held = -prices[0];
-    let sold = 0;
+function maxProfit(prices: number[], fee: number): number {
+    let hold = -prices[0];
+    let free = 0;
     
     for (let i = 1; i < prices.length; i++) {
-        held = Math.max(held, sold - prices[i]);
-        sold = Math.max(sold, held + prices[i] - fee);
+        const newHold = Math.max(hold, free - prices[i]);
+        const newFree = Math.max(free, hold + prices[i] - fee);
+        hold = newHold;
+        free = newFree;
     }
     
-    return sold;
-};
+    return free;
+}
