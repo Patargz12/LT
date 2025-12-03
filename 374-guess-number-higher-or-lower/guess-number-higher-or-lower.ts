@@ -3,7 +3,7 @@ function guessNumber(n: number): number {
     let right = n;
     
     while (left <= right) {
-        const mid = Math.floor(left + (right - left) / 2);
+        const mid = left + Math.floor((right - left) / 2);
         const result = guess(mid);
         
         if (result === 0) {
