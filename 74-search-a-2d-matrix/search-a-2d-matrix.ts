@@ -5,7 +5,7 @@ function searchMatrix(matrix: number[][], target: number): boolean {
     let right = m * n - 1;
     
     while (left <= right) {
-        const mid = Math.floor(left + (right - left) / 2);
+        const mid = Math.floor((left + right) / 2);
         const row = Math.floor(mid / n);
         const col = mid % n;
         const midValue = matrix[row][col];
