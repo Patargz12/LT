@@ -1,18 +1,17 @@
-const maxPathSum = (root) => {
+function maxPathSum(root: TreeNode | null): number {
     let maxSum = -Infinity;
     
-    const dfs = (node) => {
+    function dfs(node: TreeNode | null): number {
         if (!node) return 0;
         
-        const left = Math.max(0, dfs(node.left));
-        const right = Math.max(0, dfs(node.right));
+        const leftMax = Math.max(0, dfs(node.left));
+        const rightMax = Math.max(0, dfs(node.right));
         
-        const currentPathSum = node.val + left + right;
-        maxSum = Math.max(maxSum, currentPathSum);
+        maxSum = Math.max(maxSum, node.val + leftMax + rightMax);
         
-        return node.val + Math.max(left, right);
-    };
+        return node.val + Math.max(leftMax, rightMax);
+    }
     
     dfs(root);
     return maxSum;
-};
+}
