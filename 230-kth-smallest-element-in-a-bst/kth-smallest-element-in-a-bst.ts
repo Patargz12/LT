@@ -1,27 +1,5 @@
-const kthSmallest = (root, k) => {
-    let count = 0;
-    let result = null;
-    
-    const inorder = (node) => {
-        if (!node || result !== null) return;
-        
-        inorder(node.left);
-        
-        count++;
-        if (count === k) {
-            result = node.val;
-            return;
-        }
-        
-        inorder(node.right);
-    };
-    
-    inorder(root);
-    return result;
-};
-
-const kthSmallestIterative = (root, k) => {
-    const stack = [];
+function kthSmallest(root: TreeNode | null, k: number): number {
+    const stack: TreeNode[] = [];
     let current = root;
     let count = 0;
     
@@ -31,7 +9,7 @@ const kthSmallestIterative = (root, k) => {
             current = current.left;
         }
         
-        current = stack.pop();
+        current = stack.pop()!;
         count++;
         
         if (count === k) {
@@ -40,4 +18,6 @@ const kthSmallestIterative = (root, k) => {
         
         current = current.right;
     }
-};
+    
+    return -1;
+}
