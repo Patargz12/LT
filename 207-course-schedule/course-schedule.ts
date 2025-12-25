@@ -1,26 +1,27 @@
-const canFinish = (numCourses, prerequisites) => {
-    const graph = Array(numCourses).fill(null).map(() => []);
-    const state = new Array(numCourses).fill(0);
+function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+    const graph: number[][] = Array.from({ length: numCourses }, () => []);
+    const inDegree: number[] = new Array(numCourses).fill(0);
     
     for (const [course, prereq] of prerequisites) {
         graph[prereq].push(course);
+        inDegree[course]++;
     }
     
-    const hasCycle = course => {
-        if (state[course] === 1) return true;
-        if (state[course] === 2) return false;
-        
-        state[course] = 1;
-        for (const next of graph[course]) {
-            if (hasCycle(next)) return true;
-        }
-        state[course] = 2;
-        return false;
-    };
-    
+    const queue: number[] = [];
     for (let i = 0; i < numCourses; i++) {
-        if (hasCycle(i)) return false;
+        if (inDegree[i] === 0) queue.push(i);
     }
     
-    return true;
-};
+    let completed = 0;
+    while (queue.length > 0) {
+        const course = queue.shift()!;
+        completed++;
+        
+        for (const next of graph[course]) {
+            inDegree[next]--;
+            if (inDegree[next] === 0) queue.push(next);
+        }
+    }
+    
+    return completed === numCourses;
+}
