@@ -1,4 +1,4 @@
-const climbStairs = (n) => {
+function climbStairs(n: number): number {
     if (n <= 2) return n;
     
     let prev2 = 1;
@@ -11,4 +11,4 @@ const climbStairs = (n) => {
     }
     
     return prev1;
-};
+}
