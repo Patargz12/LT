@@ -1,5 +1,5 @@
-const coinChange = (coins, amount) => {
-    const dp = Array(amount + 1).fill(Infinity);
+function coinChange(coins: number[], amount: number): number {
+    const dp: number[] = new Array(amount + 1).fill(amount + 1);
     dp[0] = 0;
     
     for (let i = 1; i <= amount; i++) {
@@ -10,5 +10,5 @@ const coinChange = (coins, amount) => {
         }
     }
     
-    return dp[amount] === Infinity ? -1 : dp[amount];
-};
+    return dp[amount] > amount ? -1 : dp[amount];
+}
