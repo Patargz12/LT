@@ -1,13 +1,13 @@
-const getIntersectionNode = (headA, headB) => {
+function getIntersectionNode(headA: ListNode | null, headB: ListNode | null): ListNode | null {
     if (!headA || !headB) return null;
     
-    let pA = headA;
-    let pB = headB;
+    let a = headA;
+    let b = headB;
     
-    while (pA !== pB) {
-        pA = pA ? pA.next : headB;
-        pB = pB ? pB.next : headA;
+    while (a !== b) {
+        a = a ? a.next : headB;
+        b = b ? b.next : headA;
     }
     
-    return pA;
-};
+    return a;
+}
