@@ -1,19 +1,19 @@
 function setZeroes(matrix: number[][]): void {
     const m = matrix.length;
     const n = matrix[0].length;
-    let firstRowHasZero = false;
-    let firstColHasZero = false;
+    let firstRowZero = false;
+    let firstColZero = false;
     
     for (let j = 0; j < n; j++) {
         if (matrix[0][j] === 0) {
-            firstRowHasZero = true;
+            firstRowZero = true;
             break;
         }
     }
     
     for (let i = 0; i < m; i++) {
         if (matrix[i][0] === 0) {
-            firstColHasZero = true;
+            firstColZero = true;
             break;
         }
     }
@@ -35,13 +35,13 @@ function setZeroes(matrix: number[][]): void {
         }
     }
     
-    if (firstRowHasZero) {
+    if (firstRowZero) {
         for (let j = 0; j < n; j++) {
             matrix[0][j] = 0;
         }
     }
     
-    if (firstColHasZero) {
+    if (firstColZero) {
         for (let i = 0; i < m; i++) {
             matrix[i][0] = 0;
         }
